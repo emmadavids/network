@@ -1,4 +1,4 @@
-from dotenv import load_dotenv
+
 """
 Django settings for project4 project.
 
@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+from dotenv import load_dotenv
+import django_heroku
 
 load_dotenv()
 
@@ -122,4 +124,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-STATIC_URL = '/static/'
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+STATIC_ROOT = os.path.join(BASE_DIR, 'network/network/static')
+STATIC_URL = '/network/static/'
+
+
+# Activate Django-Heroku.
+django_heroku.settings(locals())
