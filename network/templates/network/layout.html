@@ -1,0 +1,96 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{% block title %}Social Network{% endblock %}</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link href="{% static 'network/styles.css' %}" rel="stylesheet">
+        <script src="https://kit.fontawesome.com/6b1e3df50c.js" crossorigin="anonymous"></script>
+        {% block script %}
+        <script>
+         
+//  document.addEventListener('DOMContentLoaded', function() { //when page has loaded do the following
+//       document.querySelectorAll('#formo').forEach((element) => element.style.display = 'none');
+//       console.log(document.querySelectorAll('#formo'));
+//       // document.querySelector('#edit-form_{{ i.0 }}').value = '';
+     
+//  });
+        </script>
+        <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+        <script defer src="{% static 'network/scriptz.js' %}"></script>
+     
+    {% endblock %}
+       
+    </head>
+    <body>
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">Network</a>
+          
+            <div>
+              <ul class="navbar-nav mr-auto">
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'load_profile' user.id %}"><strong>{{ user.username }}</strong></a>
+                    </li>
+                {% endif %}
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'index' %}">All Posts</a>
+                </li>
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'following' %}">Following</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">Log In</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'register' %}">Register</a>
+                    </li>
+                {% endif %}
+              </ul>
+            </div>
+          </nav>
+        
+        <div class="body">
+            {% block body %}
+            {% endblock %}
+           <div>
+                <ul class="pagination justify-content-center">
+                  {% if page_obj.has_previous %}
+                  <li class="page-item">
+                      <a class="page-link" href="?page={{ page_obj.previous_page_number }}">
+                          Previous
+                      </a>
+                  </li>
+                  {% endif %}
+                  {% if page_obj.paginator.num_pages > 1 %}
+                  {% for n in page_obj.paginator.page_range %}
+                  {% if page_obj.number == n %}
+                  <li class="page-item active">
+                      <a class="page-link" href="?page={{ n }}">{{ n }}</a>
+                  </li>
+                  {% endif %}
+                  {% endfor %}
+                  {% endif %}
+                  {% if page_obj.has_next %}
+                  <li class="page-item">
+                      <a class="page-link" href="?page={{ page_obj.next_page_number }}">
+                          Next
+                      </a>
+                  </li>
+                  {% endif %}
+              </ul>
+            </div>
+
+              </nav>
+        </div>
+    </body>
+</html>

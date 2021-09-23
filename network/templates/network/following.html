@@ -1,0 +1,98 @@
+{% extends "network/layout.html" %}
+
+{% block body %}
+{% if user.is_authenticated %}
+<div style="padding-left: 150px; padding-right: 150px;">
+   <br><br>
+    <form method="POST" action="{% url 'submit' %}">
+        {% csrf_token %}
+        <textarea class="form-control" rows="3" name="submitto" placeholder="Write post..." required></textarea><br>
+        <button class="btn btn-light" type="submit">Submit</button></form>
+        {% endif %}<br><br>
+        <h3><b>Tweets by accounts you follow:</h3></b><br>
+        {% if not following %}
+        You don't follow anyone yet!
+        {% else %}
+        {% for i in page_obj %}   
+
+        <li class="list-group-item list-group-item-action"> <div class="container">
+        <div id="divvo_{{ i.0 }}"><div class="tweeto_{{ i.0 }}"> <a href="{% url 'load_profile' i.1 %}"> {{ i.2 }} </a>tweeted " {{ i.3 }} " at {{ i.4 }} </div> </div>
+        
+        {% if user.is_authenticated and i.1 == user.id %} 
+        <div class="container" style="display: right;">
+            
+        <i onClick="show_edit(this.id)" id="edit{{i.0}}" style="display:right; margin-right:-48px" class="fas fa-edit"></i>
+        
+        <div class="container-fluid">
+        <form name="formo" class="edit-form_{{ i.0 }}"><br>
+         
+        
+            {% csrf_token %}
+          
+            <div id="divvo" class="form-group col-4">
+                <b><h5> Editing the above post: </b> </h5>
+                {% for field in form %} 
+                <input class="form-control" name="post" id=form{{i.0}} value="{{ i.3 }}"></input>
+               
+                {% endfor %}
+            </div>
+            <input id=form{{i.0}} type="submit" class="btn btn-light" value="Save Changes" />
+        </form>
+        </div>
+        </div>
+        
+        
+        {% endif %} 
+
+        {% if user.is_authenticated and i.0 not in liked_posts %}
+        <i class="fas fa-heart" id="authenticatedheart{{i.0}}"><div class="likes" id="likes{{i.0}}">   {{i.5}}</div> </i>
+        {% elif i.0 in liked_posts %}
+        <i class="fas fa-heart" id="authenticatedheart{{i.0}}" style="color:pink;"><div class="likes" id="likes{{i.0}}">   {{i.5}}</div> </i>
+        {% else %}
+        
+        <i class="fas fa-heart" id="unauthenticatheart{{i.0}}"><div class="likes" id="likes{{i.0}}">   {{i.5}}</div> </i>
+        {% endif %}
+                    
+        {% block javascript %}
+        <script>
+         
+        
+        $(".edit-form_{{ i.0 }}").submit(function (e) {
+                // preventing from page reload and default actions
+                e.preventDefault();
+                // serialize the data for sending the form data.
+                let serializedData = $(this).serialize();
+                console.log("serialized data is :" + serializedData)
+                // make POST ajax call    
+        $.ajax({
+            type: 'POST',
+            url: "{% url 'editpost' i.0 %}",
+            data: serializedData,
+            success: function (response) {
+             
+                $(".edit-form").trigger('reset');
+                console.log("before parsing: " + response)
+             
+                console.log(response["post"]);
+                // $('#divvo_{{ i.0 }}').remove();
+                $('.edit-form_{{ i.0 }}').hide();
+                $("#divvo_{{ i.0 }}").replaceWith(
+                  `<div id="divvo_{{ i.0 }}"><div class="tweeto_{{ i.0 }}"><a href="{% url 'load_profile' i.1 %}"> ${response["name"]} </a> tweeted " ${response["post"]} " at ${response["time_added"]}.</div></div`
+                )
+                $(".fa-edit").show();
+        
+        
+            },
+            error: function (response) {
+                // alert the error if any error occured
+                alert(response["responseJSON"]["error"]);
+            }
+        })
+        })
+        </script>
+        {% endblock javascript %}
+        {% endfor %}
+        </li></div><br><br>
+        {% endif %}
+        {% endblock %}
+        

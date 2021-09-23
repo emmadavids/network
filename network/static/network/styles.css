@@ -1,0 +1,108 @@
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: large;
+    font-weight: 100
+  }
+
+.edit {
+  float: right;
+  margin-right: 0;
+}
+
+.list-group-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+
+.likes {
+  font-family: Arial, Helvetica, sans-serif;
+  color: black;
+  float:right;
+  font-size: small;
+  text-align: right;
+  margin-left: 5px; 
+}
+
+
+.fa-edit {
+  float: right;
+  text-align: right;
+}    
+ .fa-heart {
+    float: right;
+    text-align: right;  
+  }  
+
+  .authenticated-heart:hover {
+    color: hotpink;
+    cursor: pointer;
+    cursor: hand;
+  }  
+
+  /* .post {
+    padding: 5px;
+  } */
+ .container {
+   position: relative;
+ }
+  .btn-light { 
+    background: lightcoral;
+    width: 300px;
+    color: white;
+   }
+
+  .post {
+    border: 3px solid #555;
+    width: 100%;
+
+    margin-left: -24px;
+  }
+
+  .form-group {
+    display: inline-block;
+  }
+
+  a {
+    color: hotpink;
+    cursor: pointer;
+    cursor: hand;
+  }
+  
+  a:hover {
+    color: coral;
+    cursor: pointer;
+    cursor: hand;
+  }
+ 
+
+.pagination > li > a
+{
+    background-color: white;
+    color: lightcoral;
+}
+
+.pagination > li > a:focus,
+.pagination > li > a:hover,
+.pagination > li > span:focus,
+.pagination > li > span:hover
+{
+    color: #5a5a5a;
+    background-color: #eee;
+    border-color: #ddd;
+}
+
+.pagination > .active > a
+{
+    color: white;
+    background-color: lightcoral !Important;
+    border: solid 1px lightcoral !Important;
+}
+
+.pagination > .active > a:hover
+{
+    background-color: lightcoral !Important;
+    border: solid 1px lightcoral;
+}
