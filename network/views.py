@@ -40,12 +40,15 @@ def index(request):
     paginator = Paginator(vals, 10)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    if vals is not None:
-        hello = vals[3]
+    print(" hello valsie", vals)
+
+    if not vals:
+        hello = "no posts to show"
     else: 
-        hello = "hello"    
+        hello = vals[3]
+        idee = vals[0]   
     print("hello there: ", hello)
-    form = EditForm({'id': vals[0], 'post': hello})
+    form = EditForm({'id': idee, 'post': hello})
  
 
   
