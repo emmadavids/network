@@ -44,6 +44,7 @@ def index(request):
 
     if not vals:
         hello = "no posts to show"
+        idee = "nothing to see here"
     else: 
         hello = vals[3]
         idee = vals[0]   
