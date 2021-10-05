@@ -25,11 +25,11 @@ class newEntryForm(forms.Form):
     content = forms.CharField(label="write your entry here")
 
 def index(request):
-    allposts = Post.objects.all().order_by('-time_added') 
-    for post in allposts:
+    allposts = Post.objects.all().order_by('-time_added') #returns ALL posts in the database (obviously)
+    for post in allposts: 
         post.likes = Like.objects.filter(post=post).count()
-        post.save() 
-    vals = allposts.values_list('id', 'user', 'user_name', 'post', 'time_added', 'likes')
+        post.save() #updates the like count for every post
+    vals = allposts.values_list('id', 'user', 'user_name', 'post', 'time_added', 'likes') #gets the values of all posts
     smem = Like.objects.filter(liker=request.user.id) 
     smeg = smem.values_list('post')
     liked_posts = []
