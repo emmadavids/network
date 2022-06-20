@@ -86,6 +86,17 @@ DATABASES = {
     }
 }
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'NETWORK_DB', # The Server name from 1.5
+        'USER': 'postgres', # The username from 1.6
+        'PASSWORD': 'fk32nz88', # The password from installation
+        'HOST': 'localhost', # Host name/address from 1.6,
+        'PORT': '5432' # Port from 1.6
+    }
+}
+
 AUTH_USER_MODEL = "network.User"
 
 # Password validation

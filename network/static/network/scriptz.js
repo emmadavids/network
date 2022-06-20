@@ -6,12 +6,12 @@ function update_like(id) {
             "X-CSRFToken": getCookie("csrftoken")
            }
     })
-    .then(response => { return response.json() }
+    .then(response => { return response.json() } 
 )
     .then( data => {
         bum = document.querySelector(`#likes${id}`)
         console.log(bum)
-        console.log("this is the data" + data)
+        console.log("this is the data" + data) //makes a call to the function and retrieves
         console.log("as above" + data["likescount"]["total_likes"])
         if (data["likescount"]["total_likes"] === null) {
             

@@ -243,11 +243,11 @@ def edit_post(request, id):
             now = datetime.datetime.now()
             time_added = now.strftime("%d %b, %Y, %H:%M:%S")	
             Post.objects.filter(pk=id).update(post=post)
-            return JsonResponse({"post": post,
+            return JsonResponse({"post": post, 
             "name": name,
             "time_added": time_added,
             "likes": likez[0][0]
-            }, status=200)
+            }, status=200) #serialises the data and sends it to the page
         else:
             return JsonResponse({"error": form.errors}, status=400) 
     return JsonResponse({"error": ""}, status=400)
